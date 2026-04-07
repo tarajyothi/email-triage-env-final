@@ -1,0 +1,57 @@
+name: agentic-email-triage
+version: "1.0.0"
+description: >
+  A deterministic, Gymnasium-style RL environment simulating an email triage
+  system.  Agents jointly optimise priority classification, semantic
+  categorisation, and action selection (ignore / respond / escalate) across
+  three difficulty tiers.
+
+author: OpenEnv Contributor
+license: MIT
+
+entrypoint: inference.py
+
+tasks:
+  - name: easy
+    description: >
+      Classify obvious spam and low-urgency system emails.
+      Unambiguous sender signals — no conflicting cues.
+    indices: [1, 7, 9, 16]
+    max_steps: 4
+
+  - name: medium
+    description: >
+      Handle mixed real-world emails across billing, general,
+      and employee senders.  Requires understanding context.
+    indices: [3, 5, 10, 11, 13, 14, 17]
+    max_steps: 7
+
+  - name: hard
+    description: >
+      Triage urgent and conflicting-signal emails.  Includes boss
+      directives, critical system failures, and urgent customer crises.
+      Correct escalation decisions are critical.
+    indices: [0, 2, 4, 6, 8, 12, 15]
+    max_steps: 7
+
+environment:
+  python: "3.10"
+  dependencies: requirements.txt
+  deterministic: true
+  external_apis: false
+
+reward:
+  correct_priority:    +10
+  correct_category:    +8
+  correct_action_type: +12
+  wrong_priority:      -5
+  wrong_category:      -4
+  wrong_action_type:   -6
+  escalation_bonus:    +5
+  escalation_penalty:  -6
+  max_per_step:        30
+
+scoring:
+  method: normalised_reward
+  formula: "total_reward / (steps * 30)"
+  range: [0.0, 1.0]
