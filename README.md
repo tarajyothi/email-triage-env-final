@@ -1,8 +1,16 @@
-# Agentic Email Triage — OpenEnv RL Environment
+---
+title: Email Triage AI
+emoji: 🚀
+colorFrom: blue
+colorTo: purple
+sdk: docker
+app_file: app.py
+pinned: false
+---
+<<<<<<< HEAD
+# AI Email Triage System — OpenEnv RL Environment
 
 **OpenEnv Hackathon — Round 1 Submission**
-
----
 
 ## Problem Description
 
@@ -207,3 +215,15 @@ score: 0.71
 6. **ZERO DEPENDENCIES** — Core environment runs anywhere Python 3.7+ is available.
 7. **EXTENSIBLE TO LLM AGENTS** — Structured observation + action format allows easy integration with LLM-based decision systems and tool-using agents.
 8. **COMPATIBLE WITH RL BENCHMARKING** — Gymnasium-style API, directly usable with standard RL libraries and OpenEnv pipelines.
+=======
+---
+title: Email Triage Ai
+emoji: 😻
+colorFrom: red
+colorTo: blue
+sdk: docker
+pinned: false
+---
+
+Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
+>>>>>>> 491dfcb5daf545b359bca7c3df51d98bff83d49d
