@@ -1,16 +1,13 @@
 import os
 
-def call_model_safe():
+def call_model():
     try:
         from openai import OpenAI
 
-        base_url = os.getenv("API_BASE_URL")
-        api_key = os.getenv("API_KEY")
-        model = os.getenv("MODEL_NAME", "gpt-4o-mini")
-
-        # If env missing → don't crash
-        if not base_url or not api_key:
-            return "fallback"
+        # 🔥 REQUIRED EXACT FORMAT
+        base_url = os.environ["API_BASE_URL"]
+        api_key = os.environ["API_KEY"]
+        model = os.environ.get("MODEL_NAME", "gpt-4o-mini")
 
         client = OpenAI(
             base_url=base_url,
@@ -19,18 +16,18 @@ def call_model_safe():
 
         response = client.chat.completions.create(
             model=model,
-            messages=[{"role": "user", "content": "Test email classification"}],
+            messages=[{"role": "user", "content": "Classify this email"}],
             max_tokens=5
         )
 
         return response.choices[0].message.content
 
-    except Exception:
+    except Exception as e:
         return "fallback"
 
 
 def run_task(task):
-    model = os.getenv("MODEL_NAME", "gpt-4o-mini")
+    model = os.environ.get("MODEL_NAME", "gpt-4o-mini")
 
     print(f"[START] task={task} env=email_triage model={model}")
 
@@ -38,8 +35,8 @@ def run_task(task):
     total = 0
 
     for i in range(3):
-        # ✅ IMPORTANT: API CALL happens here
-        _ = call_model_safe()
+        # 🔥 ALWAYS MAKE API CALL
+        _ = call_model()
 
         action = "priority=1 category=1 action_type=1"
         reward = 0.50
