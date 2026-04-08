@@ -2,13 +2,15 @@ from fastapi import FastAPI, Body
 from email_triage_env import EmailTriageEnv
 
 app = FastAPI()
+
 env = EmailTriageEnv()
 
 @app.get("/")
 def root():
     return {"status": "ok"}
 
-# 🔥 REQUIRED: body is MANDATORY using Body(...)
+
+# 🔥 REQUIRED: must accept body
 @app.post("/reset")
 def reset(body: dict = Body(...)):
     obs = env.reset()
@@ -19,6 +21,8 @@ def reset(body: dict = Body(...)):
         "info": {}
     }
 
+
+# 🔥 REQUIRED: must accept body
 @app.post("/step")
 def step(action: dict = Body(...)):
     obs, reward, done, info = env.step(action)
@@ -28,6 +32,7 @@ def step(action: dict = Body(...)):
         "done": bool(done),
         "info": info if isinstance(info, dict) else {}
     }
+
 
 @app.get("/state")
 def state():
