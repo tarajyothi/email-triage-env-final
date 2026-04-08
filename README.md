@@ -1,13 +1,4 @@
----
-title: Email Triage AI
-emoji: 🚀
-colorFrom: blue
-colorTo: purple
-sdk: docker
-app_file: app.py
-pinned: false
----
-<<<<<<< HEAD
+
 # AI Email Triage System — OpenEnv RL Environment
 
 **OpenEnv Hackathon — Round 1 Submission**
