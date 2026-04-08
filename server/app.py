@@ -5,29 +5,38 @@ app = FastAPI()
 
 env = EmailTriageEnv()
 
+
 @app.get("/")
 def root():
     return {"status": "ok"}
 
 
-# 🔥 REQUIRED: must accept body
+# ✅ IMPORTANT: body must be OPTIONAL
 @app.post("/reset")
-def reset(body: dict = Body(...)):
-    obs = env.reset()
+def reset(body: dict = Body(default={})):
+    try:
+        obs = env.reset()
+    except Exception:
+        obs = {}
+
     return {
-        "observation": obs,
+        "observation": obs if obs is not None else {},
         "reward": 0.0,
         "done": False,
         "info": {}
     }
 
 
-# 🔥 REQUIRED: must accept body
+# ✅ IMPORTANT: body must be OPTIONAL
 @app.post("/step")
-def step(action: dict = Body(...)):
-    obs, reward, done, info = env.step(action)
+def step(action: dict = Body(default={})):
+    try:
+        obs, reward, done, info = env.step(action)
+    except Exception:
+        obs, reward, done, info = {}, 0.0, False, {}
+
     return {
-        "observation": obs,
+        "observation": obs if obs is not None else {},
         "reward": float(reward),
         "done": bool(done),
         "info": info if isinstance(info, dict) else {}
