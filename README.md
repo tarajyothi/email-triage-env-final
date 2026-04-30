@@ -1,8 +1,6 @@
 
 # AI Email Triage System — OpenEnv RL Environment
 
-**OpenEnv Hackathon — Round 1 Submission**
-
 ## Problem Description
 
 Email overload is one of the most persistent productivity problems in knowledge-work
